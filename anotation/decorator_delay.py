@@ -43,6 +43,7 @@ def progress_delay(prefix_msg: str = "Loading", suffix_msg="Complete", sec: int 
             :param kwargs: (any) named arguments
             :return: (Callable) return main function result
             """
+            print()
             for i in range(30):
                 progress_bar(i + 1)
                 time.sleep(sec / 30)
