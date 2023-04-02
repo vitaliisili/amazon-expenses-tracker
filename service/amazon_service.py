@@ -5,7 +5,7 @@ from anotation.decorator_delay import progress_delay
 import config.app_config as config
 from dao.user_database import user_db
 import service.report_service as report
-
+from datetime import datetime
 
 def show_menu() -> None:
     """ Show menu for authenticated users.
@@ -16,8 +16,9 @@ def show_menu() -> None:
     """
 
     def select_menu(menu_number: int) -> None:
-        """  Call menu function
+        """  Execute menu option in base on given number
 
+        IMPORTANT: Required Python 3.10 or newer
         This is a help function that helps to choose the right function depending on the menu number.
         If the menu number is not found, the function will show an error message.
 
@@ -25,7 +26,7 @@ def show_menu() -> None:
         :return: (None) This function does not return any value.
         """
 
-        match menu_number:  # IMPORTANT: Required Python 3.10 or newer
+        match menu_number:
             case 1:
                 save_order()
             case 2:
@@ -63,6 +64,17 @@ def save_order() -> None:
         "quantity": 0
     }
 
+    def convert_date(date: str) -> str:
+        """ Convert date string to DD/MM/YYY
+
+        This is helper function that convert valid date to DD/MM/YYYY format
+
+        :param date: (str) A string to be converted
+        :return: (str) Return date string in format DD/MM/YYYY
+        """
+
+        return date.replace("-", "/")
+
     def get_order_data(info_message: str, error_message: str, validation_func: Callable) -> str:
         data: str = input(info_message)
 
@@ -72,9 +84,9 @@ def save_order() -> None:
 
         return data
 
-    item["purchase_date"] = get_order_data(config.ORDER_DATE_MESSAGE,
-                                           config.ORDER_DATE_ERROR,
-                                           validation.is_date_valid)
+    item["purchase_date"] = convert_date(get_order_data(config.ORDER_DATE_MESSAGE,
+                                                        config.ORDER_DATE_ERROR,
+                                                        validation.is_date_valid))
 
     item["item_name"] = get_order_data(config.ORDER_NAME_MESSAGE,
                                        config.ORDER_NAME_ERROR,
@@ -110,7 +122,7 @@ def show_report() -> None:
 
 
 @progress_delay(prefix_msg="Quitting program ")
-def close_app() -> None:
+def close_app() -> None:  # TODO decide if this function will close the app in case of error
     """ Close application
 
     The close_app function is used to close an application.
