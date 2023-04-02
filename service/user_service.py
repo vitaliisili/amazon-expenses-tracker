@@ -84,6 +84,7 @@ def get_user_phone_number() -> None:
         get_user_phone_number()
 
     update_user("phone", phone)
+    # TODO: decide if need a message for successful save phone number
 
 
 def update_user(key: str, value: [str, int, float]) -> None:
