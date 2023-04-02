@@ -45,7 +45,7 @@ def login_user(login_attempt: int) -> None:
             print_message(config.LOGIN_SUCCESSFUL_MESSAGE)
             break
 
-        if i == -0 and not authenticate_user(username, password):
+        if i == 0 and not authenticate_user(username, password):
             print_message(config.REPEAT_REGISTRATION_ERROR_MESSAGE, exit_app=True)
 
         if i == 1 and not authenticate_user(username, password):
@@ -101,7 +101,7 @@ def update_user(key: str, value: [str, int, float]) -> None:
     user_db[key] = value
 
 
-def print_message(msg: str, exit_app: bool = False) -> None:
+def print_message(msg: str, exit_app: bool = False) -> None:  # TODO move this function to utils class
     """  Print message to console
 
     Get argument <msg>: str and print this message to console
