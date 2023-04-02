@@ -1,21 +1,33 @@
+from typing import Callable
 import service.validation_service as validation
 import service.user_service as service
-import service.order_service as order
 from anotation.decorator_delay import progress_delay
 import config.app_config as config
 from dao.user_database import user_db
+import service.report_service as report
 
 
 def show_menu() -> None:
-    """
+    """ Show menu for authenticated users.
 
-    :return:
+    This function shows the menu in the command line and also asks the user for further actions.
+
+    :return: This function does not return any value.
     """
 
     def select_menu(menu_number: int) -> None:
+        """  Call menu function
+
+        This is a help function that helps to choose the right function depending on the menu number.
+        If the menu number is not found, the function will show an error message.
+
+        :param menu_number: (int)  An integer that determines which menu execute.
+        :return: (None) This function does not return any value.
+        """
+
         match menu_number:  # IMPORTANT: Required Python 3.10 or newer
             case 1:
-                get_order()
+                save_order()
             case 2:
                 show_report()
             case 3:
@@ -34,12 +46,13 @@ def show_menu() -> None:
         select_menu(int(menu_choice) if menu_choice.isnumeric() else -1)
 
 
-def get_order() -> None:  # TODO: Refactor: remove all closed method and create universal one
-    """ Get order from user input
+def save_order() -> None:
+    """ Get order from user input.
 
-    This functe collect data from user input
+    This functe collect data from user input and create object <item>,
+    Pass collected data to <save_order> function.
 
-    :return: (None) This function does not return any value
+    :return: (None) This function does not return any value.
     """
 
     item = {
@@ -50,69 +63,59 @@ def get_order() -> None:  # TODO: Refactor: remove all closed method and create 
         "quantity": 0
     }
 
-    def get_item_date() -> str:
-        date: str = input("Enter the date of the purchase in format (MM/DD/YYYY, MM-DD-YYYY): ")
-        if not validation.is_date_valid(date):
-            service.print_message("The purchase date is not valid please try again")
-            get_item_date()
+    def get_order_data(info_message: str, error_message: str, validation_func: Callable) -> str:
+        data: str = input(info_message)
 
-        return date
+        while not validation_func(data):
+            service.print_message(error_message)
+            data: str = input(info_message)
 
-    def get_item_name() -> str:
-        name: str = input("Enter the item purchased: ")
-        if not validation.is_item_name_valid(name):
-            service.print_message("The item name is not valid name must contain at least 3 characters")
-            get_item_name()
+        return data
 
-        return name
+    item["purchase_date"] = get_order_data(config.ORDER_DATE_MESSAGE,
+                                           config.ORDER_DATE_ERROR,
+                                           validation.is_date_valid)
 
-    def get_item_cost() -> float:
-        cost: str = input("Enter the cost of the item in Euro: ")
-        if not validation.is_item_cost_valid(cost):
-            service.print_message("The purchased item cost is not valid please try again")
-            get_item_cost()
+    item["item_name"] = get_order_data(config.ORDER_NAME_MESSAGE,
+                                       config.ORDER_NAME_ERROR,
+                                       validation.is_item_name_valid)
 
-        return float(cost)
+    item["total_cost"] = float(get_order_data(config.ORDER_COST_MESSAGE,
+                                              config.ORDER_COST_ERROR,
+                                              validation.is_item_cost_valid))
 
-    def get_item_weight() -> float:
-        weight: str = input("Enter the weight of the item in kg: ")
-        if not validation.is_item_weight_valid(weight):
-            service.print_message("The item weight is not valid please try again")
-            get_item_weight()
+    item["weight"] = float(get_order_data(config.ORDER_WEIGHT_MESSAGE,
+                                          config.ORDER_WEIGHT_ERROR,
+                                          validation.is_item_weight_valid))
 
-        return float(weight)
+    item["quantity"] = int(get_order_data(config.ORDER_QUANTITY_MESSAGE,
+                                          config.ORDER_QUANTITY_ERROR,
+                                          validation.is_item_quantity_valid))
 
-    def get_item_quantity() -> int:
-        quantity: str = input("Enter the quantity purchased: ")
-        if not validation.is_item_quantity_valid(quantity):
-            service.print_message("The item quantity is not valid must be a positive number please try again")
-            get_item_quantity()
-        return int(quantity)
-
-    item["purchase_date"] = get_item_date()
-    item["item_name"] = get_item_name()
-    item["total_cost"] = get_item_cost()
-    item["weight"] = get_item_weight()
-    item["quantity"] = get_item_quantity()
-
-    order.save_order(item)
+    user_db["orders"].append(item)
+    service.print_message(config.ORDER_SUCCESSFUL_PURCHASE_MESSAGE)
 
 
 @progress_delay(prefix_msg="Generating report ")
 def show_report() -> None:
-    """  TODO: add base description
-    TODO: add full description
-    :return:
+    """  Show report in command line
+
+    The show_report function is used to display a report.
+    It does not take any parameters and simply displays the report to the user
+
+    :return: (None) This function does not return any value.
     """
 
-    # TODO: call generate_report function from report service
-    # show_menu()
+    service.print_message(report.generate_report(user_db))
 
 
 @progress_delay(prefix_msg="Quitting program ")
 def close_app() -> None:
-    """
+    """ Close application
 
-    :return:
+    The close_app function is used to close an application.
+    It does not take any parameters and simply closes the application and show goodbye message.
+
+    :return: (None) This function does not return any value.
     """
-    service.print_message(config.GOODBYE_MESSAGE % user_db["username"], exit_app=True)
+    service.print_message(config.CLOSE_APP_MESSAGE % user_db["username"], exit_app=True)
