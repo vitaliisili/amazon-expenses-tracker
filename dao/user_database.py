@@ -12,12 +12,14 @@ user_db = {
     "phone": "",
     "spending_limit": AMAZON_SPENDING_LIMIT,
     "orders": [
-        {
-            "purchase_date": "",
-            "item_name": "",
-            "total_cost": 0.0,
-            "weight": 0.0,
-            "quantity": 0
-        }
+        # I left this part commented to see what properties have an order item.
+        # This block should be removed in production !
+        # {
+        #     "purchase_date": "",
+        #     "item_name": "",
+        #     "total_cost": 0.0,
+        #     "weight": 0.0,
+        #     "quantity": 0
+        # }
     ]
 }
