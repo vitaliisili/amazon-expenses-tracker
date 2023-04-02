@@ -1,5 +1,6 @@
 import service.user_service as service
 import config.app_config as config
+from datetime import datetime
 
 
 def generate_report(user_data: dict) -> str:
@@ -10,39 +11,196 @@ def generate_report(user_data: dict) -> str:
     a string containing the generated report.
 
     :param: user_data: (dict) A dictionary containing the user's data to be used to generate the report.
-    :return: (str)  A string containing the generated report.
+    :return: (str)  A string containing detailed generated report.
     """
 
-    # TEST BLOCK --> REMOVE THIS BLOCK AFTER TESTING
-    test_item = {
-        "purchase_date": "23/11/2023",
-        "item_name": "Notebook",
-        "total_cost": 100.0,
-        "weight": 3.0,
-        "quantity": 90
-    }
-    user_data["orders"].append(test_item)
-    # TEST BLOCK
+    def space_size(total: int, start_text: [str, int, float]) -> str:
+        """  Add additional spaces between items
+
+        This is helper function that calculate how many spaces are necessarily between two items
+        in base on <start_text> argument and <total>
+
+        :param total: (int)  Total space between two elements
+        :param start_text:  text before spaces
+        :return: (str) Return string of spaces required between two elements
+        """
+
+        return " " * (total - len(str(start_text)))
+
+    def get_delivery_cost(item: dict) -> [float, int]:
+        """  Calculate delivery cost per item
+
+        This function calculates the delivery cost for a package based on its weight and the cost per kilogram
+
+        :param item: (dict) A dictionary that contain key about weight
+        :return: (float, int): the calculated delivery cost
+        """
+
+        item_delivery: float = item["weight"] * config.AMAZON_CHARGES_PER_KG
+
+        if item_delivery % 1 == 0:
+            return int(item_delivery)
+
+        return item_delivery
+
+    def get_item_cost(item: dict) -> [float, int]:
+        """  Calculate item cost without delivery
+
+        This function calculate how much cost one item without delivery
+
+        :param item: (dict) A dictionary that contain key about total cost
+        :return: (float, int) Return cost per item without delivery
+        """
+
+        item_cost: float = item["total_cost"] - get_delivery_cost(item)
+
+        if item_cost % 1 == 0:
+            return int(item_cost)
+
+        return item_cost
+
+    def total_delivery_charges(orders: list) -> [float, int]:
+        """  Calculate total delivery for all orders
+
+        This function calculates the total delivery charges for a list of orders,
+        where each order is a dictionary containing the weight and cost per kilogram of the package.
+
+        :param orders: (list): A list of orders, where each order is a dictionary.
+        :return: (float, int): the total delivery charges for all the orders in the list.
+        """
+
+        total: float = sum([get_delivery_cost(order) * order["quantity"] for order in orders])
+
+        if total % 1 == 0:
+            return int(total)
+
+        return total
+
+    def total_items_cost(orders: list) -> [float, int]:
+        """  Calculate total cost for all items
+
+        This function calculates the total cost of all the items in a list of orders,
+        where each order is a dictionary containing a list of items with their respective prices and quantities.
+
+        :param orders: (list): a list of orders, where each order is a dictionary.
+        :return: (float, int): The total cost of all the items only in the list of orders.
+        """
+
+        total_cost: float = sum([order['total_cost'] * order["quantity"] for order in orders])
+        items_only = total_cost - total_delivery_charges(orders)
+
+        if items_only % 1 == 0:
+            return int(items_only)
+
+        return round(items_only, 2)
+
+    def calculate_average(orders: list) -> [float, int]:
+        """  Calculate average of all orders.
+
+        This function calculate average of a list of items including delivery
+
+        :param orders: (list): A list of orders, where each order is a dictionary.
+        :return: (float, int): the average cost of all orders
+        """
+
+        total_cost: float = sum([order['total_cost'] for order in orders])
+        items_average: float = total_cost / len(orders)
+
+        if items_average % 1 == 0:
+            return int(items_average)
+
+        return items_average
+
+    def sorted_items_by_cost(orders: list) -> list:
+        """ Sort list of items by cost
+
+        This function takes a list of orders, where each order is a dictionary
+        Sort all items by cost in ascending order.
+
+        :param orders: (list): A list of orders, where each order is a dictionary.
+        :return: (list): A list of items sorted by their costs in ascending order
+        """
+
+        orders.sort(key=lambda item: get_item_cost(item))
+
+        return orders
+
+    def sorted_items_by_date(orders: list) -> list:
+        """  Sort list of items by date
+
+        his function takes a list of orders, where each order is a dictionary
+        Sort all items by date in ascending order.
+
+        :param orders: (list) A list of orders, where each order is a dictionary.
+        :return: (lit) A list of items sorted by their date in ascending order
+        """
+
+        orders.sort(key=lambda item: datetime.strptime(item["purchase_date"], config.DATE_FORMAT))
+
+        return orders
+
+    def hide_password() -> str:
+        """  Hide password
+
+        This function replace password with asterix
+
+        :return: (str) Return a string with replaced password with asterix
+        """
+
+        return "***"
+
+    def hide_phone(phone_number: str) -> str:
+        """  Replace phone number with asterix
+
+        This function takes in a phone number as a string and returns a
+        modified version of the string with the three asterix instead of digits in middle of a string.
+        Example: +49***32
+
+        :param phone_number: (str) A string representing a phone number.
+        :return: (str) A string representing the modified phone number
+        """
+
+        modified_phone: str = phone_number[0:3] + '***' + phone_number[-2:]
+
+        return modified_phone
+
+    def get_extended_limit(items_total_cost: [float, int], delivery_total_cost: [float, int]) -> str:
+        """ Show spending limit info
+
+        It returns a string that describes the extended limit
+        based on the total cost of the items and the delivery cost.
+
+        :param items_total_cost: (float, int): The total cost of the items
+        :param delivery_total_cost: (float, int): The total cost of delivery
+        :return: (str) A string that describes the extended limit.
+        """
+
+        total_sum = items_total_cost + delivery_total_cost
+
+        if total_sum > config.AMAZON_SPENDING_LIMIT:
+            return f"You have exceeded the spending limit of {user_data['spending_limit']}"
+
+        return f"You have not exceeded the spending limit of {user_data['spending_limit']}"
 
     if len(user_data["orders"]) == 0:
         service.print_message(config.REPORT_GENERATION_ERROR)
         return ""
 
-    username = user_data["username"]
-    password = hide_password(user_data["password"])
-    phone = hide_phone(user_data["phone"])
-    date = get_date()
-    delivery = total_delivery_charges(user_data["orders"])
-    items_cost = total_items_cost(user_data["orders"])
-    sorted_list_by_cost = sorted_item_by_cost(user_data["orders"])
-    sorted_list_by_date = sorted_item_by_date(user_data["orders"])
-    most_expensive_item_name = "TV"
-    least_expensive_item_name = "Notebook"
-    most_expensive_item_price = sorted_list_by_cost[0]
-    least_expensive_item_price = sorted_list_by_cost[-1]
-    currency = config.CURRENCY
-    average = calculate_average(user_data["orders"])
-    spending_limit = user_data["spending_limit"]
+    username: str = user_data["username"]
+    password: str = hide_password()
+    phone: str = hide_phone(user_data["phone"])
+    date: str = datetime.now().strftime(config.DATE_FORMAT)
+    delivery: [float, int] = total_delivery_charges(user_data["orders"])
+    items_cost: [float, int] = total_items_cost(user_data["orders"])
+    sorted_list_by_cost: list = sorted_items_by_cost(user_data["orders"])
+    sorted_list_by_date: list = sorted_items_by_date(user_data["orders"])
+    most_expensive_item_name: str = sorted_list_by_cost[-1]["item_name"]
+    least_expensive_item_name: str = sorted_list_by_cost[0]["item_name"]
+    highest_item_price: [float, int] = get_item_cost(sorted_list_by_cost[-1])
+    lower_item_price: [float, int] = get_item_cost(sorted_list_by_cost[0])
+    currency: str = config.CURRENCY
+    average: [float, int] = calculate_average(user_data["orders"])
+    spending_limit_string: str = get_extended_limit(items_cost, delivery)
 
     report = f"""
     
@@ -56,118 +214,13 @@ def generate_report(user_data: dict) -> str:
     
     MOST EXPENSIVE        LEAST EXPENSIVE
     name: {most_expensive_item_name}  {space_size(13, most_expensive_item_name)} name: {least_expensive_item_name}
-    cost: {most_expensive_item_price} {currency}  {space_size(8, most_expensive_item_price)} cost: {least_expensive_item_price} {currency}
+    cost: {highest_item_price} {currency}  {space_size(8, highest_item_price)} cost: {lower_item_price} {currency}
     
     AVERAGE COST OF ITEM PER ORDER: {average} {currency}
-    PURCHASE DATE RANGE: {sorted_list_by_date[0]} to {sorted_list_by_date[-1]}
+    PURCHASE DATE RANGE: {sorted_list_by_date[0]["purchase_date"]} to {sorted_list_by_date[-1]["purchase_date"]}
     ---------
-    Note: You have not exceeded the spending limit of {spending_limit} {currency}
+    Note: {spending_limit_string} {currency}
     
     """
 
     return report
-
-
-def get_delivery_cost(weight: float, kg_cost: int) -> float:
-    """  TODO: add base description
-    TODO: add full description
-    :param weight:
-    :param kg_cost:
-    :return:
-    """
-    return 8  # TODO: add logic to calculate delivery and return float
-
-
-def get_item_cost(item: dict) -> float:
-    """  TODO: add base description
-    TODO: add full description
-    :param item:
-    :return:
-    """
-    return 35.70  # TODO add logic that calculate cost only for one item and return it
-
-
-def total_delivery_charges(orders: list) -> float:
-    """  TODO: add base description
-    TODO: add full description
-    :param orders:
-    :return:
-    """
-    return 832  # TODO: add logic to calculate total delivery for all orders and return it
-
-
-def total_items_cost(orders: list) -> float:
-    """  TODO: add base description
-    TODO: add full description
-    :param orders:
-    :return:
-    """
-    return 2  # TODO: add logic to calculate total cost for all items and return it
-
-
-def calculate_average(orders: list) -> float:
-    """  TODO: add base description
-    TODO: add full description
-    :param orders:
-    :return:
-    """
-    return 10.3  # TODO: calculate average for all items
-
-
-def sorted_item_by_cost(orders: list) -> list:
-    """
-
-    :param orders:
-    :return:
-    """
-    return [8, 10]
-
-
-def sorted_item_by_date(orders: list) -> list:
-    """
-
-    :param orders:
-    :return:
-    """
-    return ["14/11/2023", "16/12/2023"]
-
-
-def hide_password(password: str) -> str:
-    """  Hide password
-
-    This function replace password wit asterix
-
-    :param password: (str) password that should be replaced
-    :return: (str) Return a string with replaced password with asterix
-    """
-
-    return "***"  # TODO: Add logi that replace real password with asterix
-
-
-def hide_phone(phone) -> str:
-    """
-
-    :param phone:
-    :return:
-    """
-    return "+49***36"
-
-
-def get_date() -> str:
-    """  Return current date
-
-    This function return current date in format DD/MM/YYYY
-
-    :return:
-    """
-    return "02/12/2023"
-
-
-def space_size(total, start_text) -> str:
-    """
-
-    :param total:
-    :param start_text:
-    :return:
-    """
-    return " " * (total - len(str(start_text)))
