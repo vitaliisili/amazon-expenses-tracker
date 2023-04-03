@@ -5,7 +5,7 @@ from anotation.decorator_delay import progress_delay
 import config.app_config as config
 from dao.user_database import user_db
 import service.report_service as report
-from datetime import datetime
+
 
 def show_menu() -> None:
     """ Show menu for authenticated users.
