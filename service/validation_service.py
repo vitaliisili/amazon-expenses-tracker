@@ -1,4 +1,5 @@
 import re
+import datetime
 
 
 def is_password_valid(password: str) -> bool:
@@ -40,16 +41,24 @@ def is_username_valid(username: str) -> bool:
 
 
 def is_phone_valid(phone_number: str) -> bool:
-    """ TODO: add base description
-    TODO: add full description and parameters description
-    :param phone_number:
-    :return:
+    """ Check if passed phone number is a valid German phone number
+    
+    A valid German phone number must start with either "0" or "+49" (the country code for Germany),
+    followed by the area code and the local number. The area code must be enclosed in parentheses,
+    and can either be 2-5 digits long or a special one-digit code for mobile phones. 
+    The local number can be 3-7 digits long.
+    
+    :param phone_number: (str) A string representing the phone number to be checked.
+    :return: (bool) Returns True if the input phone number is a valid German phone number, otherwise returns False.
     """
-    return True  # TODO: add logic for German phone number validation return boolean
+    pattern = re.compile(r"^((\+49)|0)[1-9][0-9]{0,4}\)?[\d]{3,7}$")
+    return bool(pattern.match(phone_number))
+
+
 
 
 def is_date_valid(date: str) -> bool:
-    """  Check if passed date is valid
+    """Check if passed date is valid
 
     Description: Determines whether a given date is valid or not.
     A valid date must be in the format "MM-DD-YYYY" or "MM/DD/YYYY".
@@ -60,7 +69,28 @@ def is_date_valid(date: str) -> bool:
 
     pattern = re.compile(r"^\d{2}[-/]\d{2}[-/]\d{4}$")
 
-    return True  # TODO Finish the logic to validate date
+    if not pattern.match(date):
+        return False
+
+    date_parts = re.split('[-/]', date)
+    month, day, year = int(date_parts[0]), int(date_parts[1]), int(date_parts[2])
+
+    if month < 1 or month > 12:
+        return False
+    if day < 1 or day > 31:
+        return False
+    if year < 1000 or year > 9999:
+        return False
+
+    if month in [4, 6, 9, 11] and day > 30:
+        return False
+    elif month == 2:
+        if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+            if day > 29:
+                return False
+        elif day > 28:
+            return False
+    return True
 
 
 def is_item_name_valid(name: str) -> bool:
