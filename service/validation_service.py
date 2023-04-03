@@ -56,8 +56,6 @@ def is_phone_valid(phone_number: str) -> bool:
 
 
 
-import datetime
-import re
 
 def is_date_valid(date: str) -> bool:
     """Check if passed date is valid
