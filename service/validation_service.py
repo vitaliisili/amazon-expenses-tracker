@@ -56,6 +56,9 @@ def is_phone_valid(phone_number: str) -> bool:
 
 
 
+import datetime
+import re
+
 def is_date_valid(date: str) -> bool:
     """Check if passed date is valid
 
@@ -71,15 +74,26 @@ def is_date_valid(date: str) -> bool:
     if not pattern.match(date):
         return False
 
-    try:
-        datetime.datetime.strptime(date, '%m-%d-%Y')
-        return True
-    except ValueError:
-        try:
-            datetime.datetime.strptime(date, '%m/%d/%Y')
-            return True
-        except ValueError:
+    date_parts = re.split('[-/]', date)
+    month, day, year = int(date_parts[0]), int(date_parts[1]), int(date_parts[2])
+
+    if month < 1 or month > 12:
+        return False
+    if day < 1 or day > 31:
+        return False
+    if year < 1000 or year > 9999:
+        return False
+
+    if month in [4, 6, 9, 11] and day > 30:
+        return False
+    elif month == 2:
+        if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+            if day > 29:
+                return False
+        elif day > 28:
             return False
+    return True
+
 
 def is_item_name_valid(name: str) -> bool:
     """  Check if name of item is valid
