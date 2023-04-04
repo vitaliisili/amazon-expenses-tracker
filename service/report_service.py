@@ -204,7 +204,7 @@ def generate_report(user_data: dict) -> str:
     average: Union[float, int] = calculate_average(user_data["orders"])
     spending_limit_string: str = get_extended_limit(items_cost, delivery)
 
-    report = f"""
+    report = f"""{config.COLOR_BLUE}
     
                       -------------------------
                       | Amazon Expense Report |
@@ -223,6 +223,6 @@ def generate_report(user_data: dict) -> str:
     ---------
     Note: {spending_limit_string} {currency}
     
-    """
+    {config.COlOR_RESET}"""
 
     return report
