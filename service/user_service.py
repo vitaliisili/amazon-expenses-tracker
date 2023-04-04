@@ -1,4 +1,6 @@
 import sys
+from typing import Union
+
 import config.app_config as config
 import service.validation_service as validation
 from dao.user_database import user_db
@@ -38,8 +40,8 @@ def login_user(login_attempt: int) -> None:
 
     for i in range(login_attempt, -1, -1):
         print_message(f"\nPlease login to system with your username and password")
-        username = input("Username: ")
-        password = input("Password: ")
+        username: str = input("Username: ")
+        password: str = input("Password: ")
 
         if authenticate_user(username, password):
             print_message(config.LOGIN_SUCCESSFUL_MESSAGE)
@@ -87,7 +89,7 @@ def get_user_phone_number() -> None:
     # TODO: decide if need a message for successful save phone number
 
 
-def update_user(key: str, value: [str, int, float]) -> None:
+def update_user(key: str, value: Union[str, int, float]) -> None:
     """ Update a user's information in the database
 
     This function is used to update a user's information in the database
@@ -101,7 +103,7 @@ def update_user(key: str, value: [str, int, float]) -> None:
     user_db[key] = value
 
 
-def print_message(msg: str, exit_app: bool = False) -> None:  # TODO move this function to utils class
+def print_message(msg: str, exit_app: bool = False) -> None:
     """  Print message to console
 
     Get argument <msg>: str and print this message to console
