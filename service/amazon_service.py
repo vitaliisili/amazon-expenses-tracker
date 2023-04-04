@@ -130,4 +130,5 @@ def close_app() -> None:  # TODO decide if this function will close the app in c
 
     :return: (None) This function does not return any value.
     """
+
     service.print_message(config.CLOSE_APP_MESSAGE % user_db["username"], exit_app=True)
