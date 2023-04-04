@@ -54,7 +54,9 @@ def login_user(login_attempt: int) -> None:
             print_message(config.LOGIN_ATTEMPTS_ERROR_MESSAGE)
             time.sleep(config.SECONDS_TO_NEXT_ATTEMPT)
 
-        print_message(config.LOGIN_ERROR_MESSAGE)
+        print_message(config.LOGIN_ERROR_MESSAGE)  # TODO: Decide if show attempt
+
+    print_message(config.GREETING_MESSAGE % user_db["username"])
 
 
 def authenticate_user(username: str, password: str) -> bool:
@@ -86,7 +88,7 @@ def get_user_phone_number() -> None:
         get_user_phone_number()
 
     update_user("phone", phone)
-    # TODO: decide if need a message for successful save phone number
+    print_message(config.PHONE_SUCCESS_MESSAGE)
 
 
 def update_user(key: str, value: Union[str, int, float]) -> None:
