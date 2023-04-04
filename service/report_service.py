@@ -42,7 +42,7 @@ def generate_report(user_data: dict) -> str:
         if item_delivery % 1 == 0:
             return int(item_delivery)
 
-        return item_delivery
+        return round(item_delivery, 2)
 
     def get_item_cost(item: dict) -> Union[float, int]:
         """  Calculate item cost without delivery
@@ -58,7 +58,7 @@ def generate_report(user_data: dict) -> str:
         if item_cost % 1 == 0:
             return int(item_cost)
 
-        return item_cost
+        return round(item_cost)
 
     def total_delivery_charges(orders: list) -> Union[float, int]:
         """  Calculate total delivery for all orders
@@ -75,7 +75,7 @@ def generate_report(user_data: dict) -> str:
         if total % 1 == 0:
             return int(total)
 
-        return total
+        return round(total)
 
     def total_items_cost(orders: list) -> Union[float, int]:
         """  Calculate total cost for all items
@@ -110,7 +110,7 @@ def generate_report(user_data: dict) -> str:
         if items_average % 1 == 0:
             return int(items_average)
 
-        return items_average
+        return round(items_average)
 
     def sorted_items_by_cost(orders: list) -> list:
         """ Sort list of items by cost
