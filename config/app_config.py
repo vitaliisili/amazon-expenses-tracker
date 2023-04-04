@@ -1,15 +1,19 @@
 from colorama import Fore
 
 """
-This file contain all constants for error, successful messages
+This file contain all constants for error, successful messages, colors and basic configuration
 also this fail contains constants for configuration like <LOGIN_ATTEMPTS> and <SECONDS_TO_NEXT_ATTEMPT>
 use these constants to display a message in command prompt
 """
 
-COLOR_RED = Fore.RED
+# Text Colors
+COLOR_RED = Fore.LIGHTRED_EX
 COLOR_GREEN = Fore.LIGHTGREEN_EX
 COlOR_RESET = Fore.RESET
 COLOR_YELLOW = Fore.LIGHTYELLOW_EX
+COLOR_WHITE = Fore.LIGHTWHITE_EX
+COLOR_BLACK = Fore.LIGHTBLACK_EX
+COLOR_BLUE = Fore.LIGHTBLUE_EX
 
 # Basic config
 LOGIN_ATTEMPTS = 3
@@ -26,6 +30,8 @@ REGISTRATION_SUCCESSFUL_MESSAGE = f"{COLOR_GREEN}\nRegistration successful!{COlO
 REPEAT_REGISTRATION_ERROR_MESSAGE = f"{COLOR_RED}No such user with entered username and password please try to register{COlOR_RESET}"
 
 # Phone number messages
+PHONE_NUMBER_MESSAGE = f"{COLOR_WHITE}Please enter phone number to continue: {COlOR_RESET}"
+PHONE_SUCCESS_MESSAGE = f"{COLOR_GREEN}\nPhone number saved successful !{COlOR_RESET}"
 PHONE_ERROR_MESSAGE = f"{COLOR_RED}Phone number is not valid, please enter a valid number{COlOR_RESET}"
 
 # Login messages
@@ -41,22 +47,33 @@ REPORT_GENERATION_ERROR = f"{COLOR_RED}\nPlease insert at least one item to gene
 
 # Order messages
 ORDER_SUCCESSFUL_PURCHASE_MESSAGE = f"{COLOR_GREEN}\nPurchase saved !\n{COlOR_RESET}"
-ORDER_DATE_MESSAGE = "\nEnter the date of the purchase in format (MM/DD/YYYY, MM-DD-YYYY): "
-ORDER_DATE_ERROR = f"{COLOR_RED}\nThe purchase date is not valid please try again{COlOR_RESET}"
-ORDER_NAME_MESSAGE = "Enter the item purchased: "
-ORDER_NAME_ERROR = f"{COLOR_RED}\nThe item name is not valid name must contain at least 3 characters{COlOR_RESET}"
-ORDER_COST_MESSAGE = "Enter the cost of the item in Euro: "
-ORDER_COST_ERROR = f"{COLOR_RED}\nThe purchased item cost is not valid please try again{COlOR_RESET}"
-ORDER_WEIGHT_MESSAGE = "Enter the weight of the item in kg: "
-ORDER_WEIGHT_ERROR = f"{COLOR_RED}\nThe item weight is not valid please try again{COlOR_RESET}"
-ORDER_QUANTITY_MESSAGE = "Enter the quantity purchased: "
-ORDER_QUANTITY_ERROR = f"{COLOR_RED}\nThe item quantity is not valid must be a positive number please try again{COlOR_RESET}"
+ORDER_DATE_MESSAGE = f"{COLOR_WHITE}Enter the date of the purchase in format (MM/DD/YYYY, MM-DD-YYYY): {COlOR_RESET}"
+ORDER_DATE_ERROR = f"{COLOR_RED}The purchase date is not valid please try again{COlOR_RESET}"
+ORDER_NAME_MESSAGE = f"{COLOR_WHITE}Enter the item purchased: {COlOR_RESET}"
+ORDER_NAME_ERROR = f"{COLOR_RED}The item name is not valid name must contain at least 3 characters{COlOR_RESET}"
+ORDER_COST_MESSAGE = f"{COLOR_WHITE}Enter the cost of the item in Euro: {COlOR_RESET}"
+ORDER_COST_ERROR = f"{COLOR_RED}The purchased item cost is not valid please try again{COlOR_RESET}"
+ORDER_WEIGHT_MESSAGE = f"{COLOR_WHITE}Enter the weight of the item in kg: {COlOR_RESET}"
+ORDER_WEIGHT_ERROR = f"{COLOR_RED}The item weight is not valid please try again{COlOR_RESET}"
+ORDER_QUANTITY_MESSAGE = f"{COLOR_WHITE}Enter the quantity purchased: {COlOR_RESET}"
+ORDER_QUANTITY_ERROR = f"{COLOR_RED}The item quantity is not valid must be a positive number please try again{COlOR_RESET}"
 
 # Formatted messages
-GREETING_MESSAGE = f"{COLOR_GREEN}Hello, {COLOR_YELLOW}%s !{COLOR_GREEN} Welcome to the Amazon Expense Tracker!{COlOR_RESET}"
+GREETING_MESSAGE = f"{COLOR_GREEN}Hello, {COLOR_YELLOW}%s!{COLOR_GREEN} Welcome to the Amazon Expense Tracker!\n{COlOR_RESET}"
 CLOSE_APP_MESSAGE = f"{COLOR_GREEN}\nThank you for your visit, {COLOR_YELLOW}%s{COLOR_GREEN}. Goodbye!{COlOR_RESET}"
-AMAZON_WELCOME_MESSAGE = f"""{COLOR_YELLOW}
+AMAZON_WELCOME_MESSAGE = f"""{COLOR_WHITE}
     ----------------------
     | Welcome to Amazon! |
     ----------------------
 {COlOR_RESET}"""
+
+APP_DESCRIPTION = """
+                            AMAZON EXPENSE TRACKER
+ --------------------------------Description------------------------------------
+ |                                                                              |
+ |  Amazon expense tracker is command line application that help to generate    |
+ |  detailed orders report, amazon-expense-tracker calculate delivery charges,  | 
+ |  total item cost, most/least expensive item, average cost of item per order. |
+ |                                                                              |
+ --------------------------------------------------------------------------------
+"""
