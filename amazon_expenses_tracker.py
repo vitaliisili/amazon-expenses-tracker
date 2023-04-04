@@ -1,17 +1,13 @@
-from argparse import ArgumentParser
+from argparse import ArgumentParser, RawTextHelpFormatter
 import service.user_service as service
 import service.amazon_service as amazon
 import config.app_config as config
 
 
 def main():
-    parser = ArgumentParser(description="description")  # TODO: add description
-
-    parser.add_argument("username",
-                        help="help")  # TODO: add help description
-
-    parser.add_argument("password",
-                        help="help")  # TODO: add help description
+    parser = ArgumentParser(description=config.APP_DESCRIPTION, formatter_class=RawTextHelpFormatter)
+    parser.add_argument("username", help="User username")
+    parser.add_argument("password", help="User Password")
 
     args = parser.parse_args()
     username = args.username
