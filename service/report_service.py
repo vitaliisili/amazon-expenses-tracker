@@ -1,6 +1,7 @@
 import service.user_service as service
 import config.app_config as config
 from datetime import datetime
+from typing import Union
 
 
 def generate_report(user_data: dict) -> str:
@@ -14,7 +15,7 @@ def generate_report(user_data: dict) -> str:
     :return: (str)  A string containing detailed generated report.
     """
 
-    def space_size(total: int, start_text: [str, int, float]) -> str:
+    def space_size(total: int, start_text: Union[str, int, float]) -> str:
         """  Add additional spaces between items
 
         This is helper function that calculate how many spaces are necessarily between two items
@@ -27,7 +28,7 @@ def generate_report(user_data: dict) -> str:
 
         return " " * (total - len(str(start_text)))
 
-    def get_delivery_cost(item: dict) -> [float, int]:
+    def get_delivery_cost(item: dict) -> Union[float, int]:
         """  Calculate delivery cost per item
 
         This function calculates the delivery cost for a package based on its weight and the cost per kilogram
@@ -43,7 +44,7 @@ def generate_report(user_data: dict) -> str:
 
         return item_delivery
 
-    def get_item_cost(item: dict) -> [float, int]:
+    def get_item_cost(item: dict) -> Union[float, int]:
         """  Calculate item cost without delivery
 
         This function calculate how much cost one item without delivery
@@ -59,7 +60,7 @@ def generate_report(user_data: dict) -> str:
 
         return item_cost
 
-    def total_delivery_charges(orders: list) -> [float, int]:
+    def total_delivery_charges(orders: list) -> Union[float, int]:
         """  Calculate total delivery for all orders
 
         This function calculates the total delivery charges for a list of orders,
@@ -76,7 +77,7 @@ def generate_report(user_data: dict) -> str:
 
         return total
 
-    def total_items_cost(orders: list) -> [float, int]:
+    def total_items_cost(orders: list) -> Union[float, int]:
         """  Calculate total cost for all items
 
         This function calculates the total cost of all the items in a list of orders,
@@ -94,7 +95,7 @@ def generate_report(user_data: dict) -> str:
 
         return round(items_only, 2)
 
-    def calculate_average(orders: list) -> [float, int]:
+    def calculate_average(orders: list) -> Union[float, int]:
         """  Calculate average of all orders.
 
         This function calculate average of a list of items including delivery
@@ -164,7 +165,7 @@ def generate_report(user_data: dict) -> str:
 
         return modified_phone
 
-    def get_extended_limit(items_total_cost: [float, int], delivery_total_cost: [float, int]) -> str:
+    def get_extended_limit(items_total_cost: Union[float, int], delivery_total_cost: Union[float, int]) -> str:
         """ Show spending limit info
 
         It returns a string that describes the extended limit
@@ -190,16 +191,16 @@ def generate_report(user_data: dict) -> str:
     password: str = hide_password()
     phone: str = hide_phone(user_data["phone"])
     date: str = datetime.now().strftime(config.DATE_FORMAT)
-    delivery: [float, int] = total_delivery_charges(user_data["orders"])
-    items_cost: [float, int] = total_items_cost(user_data["orders"])
+    delivery: Union[float, int] = total_delivery_charges(user_data["orders"])
+    items_cost: Union[float, int] = total_items_cost(user_data["orders"])
     sorted_list_by_cost: list = sorted_items_by_cost(user_data["orders"])
     sorted_list_by_date: list = sorted_items_by_date(user_data["orders"])
     most_expensive_item_name: str = sorted_list_by_cost[-1]["item_name"]
     least_expensive_item_name: str = sorted_list_by_cost[0]["item_name"]
-    highest_item_price: [float, int] = get_item_cost(sorted_list_by_cost[-1])
-    lower_item_price: [float, int] = get_item_cost(sorted_list_by_cost[0])
+    highest_item_price: Union[float, int] = get_item_cost(sorted_list_by_cost[-1])
+    lower_item_price: Union[float, int] = get_item_cost(sorted_list_by_cost[0])
     currency: str = config.CURRENCY
-    average: [float, int] = calculate_average(user_data["orders"])
+    average: Union[float, int] = calculate_average(user_data["orders"])
     spending_limit_string: str = get_extended_limit(items_cost, delivery)
 
     report = f"""
