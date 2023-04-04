@@ -42,19 +42,19 @@ REPORT_GENERATION_ERROR = f"{COLOR_RED}\nPlease insert at least one item to gene
 # Order messages
 ORDER_SUCCESSFUL_PURCHASE_MESSAGE = f"{COLOR_GREEN}\nPurchase saved !\n{COlOR_RESET}"
 ORDER_DATE_MESSAGE = "\nEnter the date of the purchase in format (MM/DD/YYYY, MM-DD-YYYY): "
-ORDER_DATE_ERROR = f"{COLOR_RED}The purchase date is not valid please try again{COlOR_RESET}"
+ORDER_DATE_ERROR = f"{COLOR_RED}\nThe purchase date is not valid please try again{COlOR_RESET}"
 ORDER_NAME_MESSAGE = "Enter the item purchased: "
-ORDER_NAME_ERROR = f"{COLOR_RED}\nThe item name is not valid name must contain at least 3 characters\n{COlOR_RESET}"
+ORDER_NAME_ERROR = f"{COLOR_RED}\nThe item name is not valid name must contain at least 3 characters{COlOR_RESET}"
 ORDER_COST_MESSAGE = "Enter the cost of the item in Euro: "
-ORDER_COST_ERROR = f"{COLOR_RED}The purchased item cost is not valid please try again{COlOR_RESET}"
+ORDER_COST_ERROR = f"{COLOR_RED}\nThe purchased item cost is not valid please try again{COlOR_RESET}"
 ORDER_WEIGHT_MESSAGE = "Enter the weight of the item in kg: "
-ORDER_WEIGHT_ERROR = f"{COLOR_RED}The item weight is not valid please try again{COlOR_RESET}"
+ORDER_WEIGHT_ERROR = f"{COLOR_RED}\nThe item weight is not valid please try again{COlOR_RESET}"
 ORDER_QUANTITY_MESSAGE = "Enter the quantity purchased: "
-ORDER_QUANTITY_ERROR = f"{COLOR_RED}The item quantity is not valid must be a positive number please try again{COlOR_RESET}"
+ORDER_QUANTITY_ERROR = f"{COLOR_RED}\nThe item quantity is not valid must be a positive number please try again{COlOR_RESET}"
 
 # Formatted messages
-GREETING_MESSAGE = "Hello, %s! Welcome to the Amazon Expense Tracker!"
-CLOSE_APP_MESSAGE = f"\nThank you for your visit, %s. Goodbye!"
+GREETING_MESSAGE = f"{COLOR_GREEN}Hello, {COLOR_YELLOW}%s !{COLOR_GREEN} Welcome to the Amazon Expense Tracker!{COlOR_RESET}"
+CLOSE_APP_MESSAGE = f"{COLOR_GREEN}\nThank you for your visit, {COLOR_YELLOW}%s{COLOR_GREEN}. Goodbye!{COlOR_RESET}"
 AMAZON_WELCOME_MESSAGE = f"""{COLOR_YELLOW}
     ----------------------
     | Welcome to Amazon! |
