@@ -81,11 +81,11 @@ def get_user_phone_number() -> None:
     :return: (None) This function does not return any value.
     """
 
-    phone = input("Please enter phone number to continue: ")
+    phone = input(config.PHONE_NUMBER_MESSAGE)
 
-    if not validation.is_phone_valid(phone):
+    while not validation.is_phone_valid(phone):
         print_message(config.PHONE_ERROR_MESSAGE)
-        get_user_phone_number()
+        phone = input(config.PHONE_NUMBER_MESSAGE)
 
     update_user("phone", phone)
     print_message(config.PHONE_SUCCESS_MESSAGE)
