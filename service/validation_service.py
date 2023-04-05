@@ -1,5 +1,5 @@
 import re
-import datetime
+import config.app_config as config
 
 
 def is_password_valid(password: str) -> bool:
@@ -131,7 +131,6 @@ def is_item_weight_valid(weight: str) -> bool:
     Determines whether a given item weight is valid or not.
     A valid item weight must be a string representing positive float or integer.
 
-    TODO: add full description and parameters description
     :param weight: (str) A string representing the item weight
     :return: (bool) Returns True if the input weight is valid, otherwise returns False.
     """
@@ -151,3 +150,18 @@ def is_item_quantity_valid(quantity: str) -> bool:
     :return: (bool) Returns True if the input is a valid item quantity, otherwise returns False.
     """
     return quantity.isnumeric()
+
+
+def is_cost_weight_rapport_valid(weight: float, cost: float, quantity: int) -> bool:
+    """ Check if rapport between item cost and weight
+
+    This function check rapport between item weight and cost if weight is bigger than cost that mean
+    delivery cost more than total item cost in this case <is_cost_weight_rapport_valid> return false
+
+    :param quantity: (int) item quantity
+    :param weight: (float) item weight that should be checked
+    :param cost: (float) item cost that should be checked
+    :return: (bool)  Return boolean if rapport between two items is valid
+    """
+
+    return cost >= (weight * config.AMAZON_CHARGES_PER_KG * quantity)
