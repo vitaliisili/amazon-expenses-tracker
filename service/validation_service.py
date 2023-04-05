@@ -163,5 +163,6 @@ def is_cost_weight_rapport_valid(weight: float, cost: float, quantity: int) -> b
     :param cost: (float) item cost that should be checked
     :return: (bool)  Return boolean if rapport between two items is valid
     """
-
-    return cost >= (weight * config.AMAZON_CHARGES_PER_KG * quantity)
+    total_cost = cost * quantity
+    delivery = weight * config.AMAZON_CHARGES_PER_KG * quantity
+    return total_cost >= delivery
