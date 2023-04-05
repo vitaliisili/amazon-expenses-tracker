@@ -92,7 +92,7 @@ def get_user_phone_number() -> None:
 
 
 def update_user(key: str, value: Union[str, int, float]) -> None:
-    """ Update a user's information in the database
+    """ Update a user's data in the database
 
     This function is used to update a user's information in the database
     based on the key-value pair provided.
