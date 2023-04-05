@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import Callable
 import service.validation_service as validation
 import service.user_service as service
@@ -84,6 +85,53 @@ def save_order() -> None:
 
         return data
 
+    def update_order(order: dict) -> dict:
+        """ Update order with new data
+
+        This function update current order, get <order> as argument make a deepcopy of it for further changes
+
+        :param order: (dict) dictionary that should be updated
+        :return: (dict) return new updated order
+        """
+        updated_item = deepcopy(order)
+
+        while not validation.is_cost_weight_rapport_valid(
+                updated_item["weight"],
+                updated_item["total_cost"],
+                updated_item['quantity']):
+
+            print("Your delivery is bigger than item total cost please choose one option")
+            print("""
+            1. Update item cost
+            2. Update item weight
+            """)
+            optional_menu_number = input("Enter you choice (1/2): ")
+
+            if optional_menu_number == '1':
+                new_total_cost = input("Enter new total cost: ")
+                while not validation.is_item_cost_valid(new_total_cost):
+                    print("Item total cost is not valid please try again")
+                    new_total_cost = input("Enter new total cost: ")
+                else:
+                    updated_item["total_cost"] = float(new_total_cost)
+                    print("Item total cost has been updated successful!")
+                    continue
+
+            elif optional_menu_number == '2':
+                new_item_weight = input("Enter new weight: ")
+                while not validation.is_item_weight_valid(new_item_weight):
+                    print("Item weight is not valid please try again")
+                    new_item_weight = input("Enter new weight: ")
+                else:
+                    updated_item["weight"] = float(new_item_weight)
+                    print("Item weight has been updated successful!")
+                    continue
+
+            else:
+                print("Entered menu number is not valid please enter one of two options")
+        else:
+            return updated_item
+
     item["purchase_date"] = convert_date(get_order_data(config.ORDER_DATE_MESSAGE,
                                                         config.ORDER_DATE_ERROR,
                                                         validation.is_date_valid))
@@ -103,6 +151,9 @@ def save_order() -> None:
     item["quantity"] = int(get_order_data(config.ORDER_QUANTITY_MESSAGE,
                                           config.ORDER_QUANTITY_ERROR,
                                           validation.is_item_quantity_valid))
+
+    if not validation.is_cost_weight_rapport_valid(item["weight"], item["total_cost"], item['quantity']):
+        item.update(update_order(item))
 
     user_db["orders"].append(item)
     service.print_message(config.ORDER_SUCCESSFUL_PURCHASE_MESSAGE)
