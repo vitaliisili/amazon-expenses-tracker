@@ -51,10 +51,16 @@ def is_phone_valid(phone_number: str) -> bool:
     :param phone_number: (str) A string representing the phone number to be checked.
     :return: (bool) Returns True if the input phone number is a valid German phone number, otherwise returns False.
     """
-    pattern = re.compile(r"^((\+49)|0)[1-9][0-9]{0,4}\)?[\d]{3,7}$")
-    return bool(pattern.match(phone_number))
+    pattern = re.compile(r"^((00)|(\+))49(\s?\(?\d{2,4}\)?\s?\d{2,4})\s?\d{4}$")
+    phone: str = ''
 
+    if bool(pattern.match(phone_number)):
+        if phone_number[0:2] == '00':
+            phone = re.sub(r"[\s()]", "", phone_number[4:])
+        else:
+            phone = re.sub(r"[\s()]", "", phone_number[3:])
 
+    return len(phone) in [10, 11]
 
 
 def is_date_valid(date: str) -> bool:
@@ -78,8 +84,6 @@ def is_date_valid(date: str) -> bool:
     if month < 1 or month > 12:
         return False
     if day < 1 or day > 31:
-        return False
-    if year < 1000 or year > 9999:
         return False
 
     if month in [4, 6, 9, 11] and day > 30:
