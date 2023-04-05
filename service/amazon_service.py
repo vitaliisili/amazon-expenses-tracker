@@ -77,6 +77,15 @@ def save_order() -> None:
         return date.replace("-", "/")
 
     def get_order_data(info_message: str, error_message: str, validation_func: Callable) -> str:
+        """ Get data from command prompt
+
+        TODO: add full description
+
+        :param info_message:
+        :param error_message:
+        :param validation_func:
+        :return:
+        """
         data: str = input(info_message)
 
         while not validation_func(data):
