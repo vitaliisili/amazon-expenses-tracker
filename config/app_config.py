@@ -72,7 +72,7 @@ AMAZON_WELCOME_MESSAGE = f"""{COLOR_WHITE}
     ----------------------
 {COlOR_RESET}"""
 
-APP_DESCRIPTION = """
+APP_DESCRIPTION = f"""{COLOR_YELLOW}
                             AMAZON EXPENSE TRACKER
  --------------------------------Description------------------------------------
  |                                                                              |
@@ -81,4 +81,4 @@ APP_DESCRIPTION = """
  |  total item cost, most/least expensive item, average cost of item per order. |
  |                                                                              |
  --------------------------------------------------------------------------------
-"""
+{COlOR_RESET}"""
