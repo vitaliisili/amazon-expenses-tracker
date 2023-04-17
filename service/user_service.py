@@ -1,6 +1,5 @@
 import sys
 from typing import Union
-
 import config.app_config as config
 import service.validation_service as validation
 from dao.user_database import user_db
