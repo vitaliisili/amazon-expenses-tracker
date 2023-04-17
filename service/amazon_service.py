@@ -38,8 +38,8 @@ def show_menu() -> None:
                 service.print_message(config.MENU_ITEM_ERROR_MESSAGE)
 
     while True:
-        print(f"What would you like to do?")
-        print("""
+        service.print_message(f"What would you like to do?")
+        service.print_message("""
         1. Enter a purchase
         2. Generate a report
         3. Quit
@@ -110,7 +110,7 @@ def save_order() -> None:
                 updated_item['quantity']):
 
             service.print_message(config.ORDER_DELIVERY_ERROR)
-            print("""
+            service.print_message("""
         1. Update item cost
         2. Update item weight
             """)
