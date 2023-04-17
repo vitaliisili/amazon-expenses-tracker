@@ -57,10 +57,15 @@ ORDER_WEIGHT_MESSAGE = f"{COLOR_WHITE}Enter the weight of the item in kg: {COlOR
 ORDER_WEIGHT_ERROR = f"{COLOR_RED}The item weight is not valid please try again{COlOR_RESET}"
 ORDER_QUANTITY_MESSAGE = f"{COLOR_WHITE}Enter the quantity purchased: {COlOR_RESET}"
 ORDER_QUANTITY_ERROR = f"{COLOR_RED}The item quantity is not valid must be a positive number please try again{COlOR_RESET}"
+ORDER_DELIVERY_ERROR = f"{COLOR_RED}Your delivery is bigger than item total cost please choose one option{COlOR_RESET}"
+ORDER_COST_UPDATE_MESSAGE = f"{COLOR_GREEN}Item total cost has been updated successful!{COlOR_RESET}"
+ORDER_WEIGHT_UPDATE_MESSAGE = f"{COLOR_GREEN}Item weight has been updated successful!{COlOR_RESET}"
+ORDER_UPDATE_MENU_ERROR = f"{COLOR_RED}Entered menu number is not valid please enter one of two options{COlOR_RESET}"
 
 # Formatted messages
 GREETING_MESSAGE = f"{COLOR_GREEN}Hello, {COLOR_YELLOW}%s!{COLOR_GREEN} Welcome to the Amazon Expense Tracker!\n{COlOR_RESET}"
 CLOSE_APP_MESSAGE = f"{COLOR_GREEN}\nThank you for your visit, {COLOR_YELLOW}%s{COLOR_GREEN}. Goodbye!{COlOR_RESET}"
+
 AMAZON_WELCOME_MESSAGE = f"""{COLOR_WHITE}
     ----------------------
     | Welcome to Amazon! |
