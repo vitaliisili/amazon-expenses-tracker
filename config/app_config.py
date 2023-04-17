@@ -2,7 +2,7 @@ from colorama import Fore
 
 """
 This file contain all constants for error, successful messages, colors and basic configuration
-also this fail contains constants for configuration like <LOGIN_ATTEMPTS> and <SECONDS_TO_NEXT_ATTEMPT>
+also this fail contains constants for configuration
 use these constants to display a message in command prompt
 """
 
@@ -81,4 +81,16 @@ APP_DESCRIPTION = f"""{COLOR_YELLOW}
  |  total item cost, most/least expensive item, average cost of item per order. |
  |                                                                              |
  --------------------------------------------------------------------------------
+{COlOR_RESET}"""
+
+APP_LOGO = f"""{COLOR_YELLOW}                                                                                      
+           ██     ▀████▄     ▄███▀     ██     ███▀▀▀███ ▄▄█▀▀██▄ ▀███▄   ▀███▀
+          ▄██▄      ████    ████      ▄██▄    █▀   ███▄██▀    ▀██▄ ███▄    █  
+         ▄█▀██▄     █ ██   ▄█ ██     ▄█▀██▄   ▀   ███ ██▀      ▀██ █ ███   █  
+        ▄█  ▀██     █  ██  █▀ ██    ▄█  ▀██      ███  ██        ██ █  ▀██▄ █  
+        ████████    █  ██▄█▀  ██    ████████    ███   ▄█▄      ▄██ █   ▀██▄█  
+       █▀      ██   █  ▀██▀   ██   █▀      ██  ███   ▄███▄    ▄██▀ █     ███  
+     ▄███▄   ▄████▄███▄ ▀▀  ▄████▄███▄   ▄████▄████████ ▀▀████▀▀ ▄███▄    ██
+            
+            {APP_DESCRIPTION}
 {COlOR_RESET}"""
