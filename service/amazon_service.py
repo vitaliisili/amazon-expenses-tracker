@@ -111,8 +111,8 @@ def save_order() -> None:
 
             service.print_message(config.ORDER_DELIVERY_ERROR)
             print("""
-            1. Update item cost
-            2. Update item weight
+        1. Update item cost
+        2. Update item weight
             """)
             optional_menu_number = input("Enter you choice (1/2): ")
 
