@@ -109,7 +109,7 @@ def save_order() -> None:
                 updated_item["total_cost"],
                 updated_item['quantity']):
 
-            print("Your delivery is bigger than item total cost please choose one option")
+            service.print_message(config.ORDER_DELIVERY_ERROR)
             print("""
             1. Update item cost
             2. Update item weight
@@ -119,25 +119,25 @@ def save_order() -> None:
             if optional_menu_number == '1':
                 new_total_cost = input("Enter new total cost: ")
                 while not validation.is_item_cost_valid(new_total_cost):
-                    print("Item total cost is not valid please try again")
+                    service.print_message(config.ORDER_COST_ERROR)
                     new_total_cost = input("Enter new total cost: ")
                 else:
                     updated_item["total_cost"] = float(new_total_cost)
-                    print("Item total cost has been updated successful!")
+                    service.print_message(config.ORDER_COST_UPDATE_MESSAGE)
                     continue
 
             elif optional_menu_number == '2':
                 new_item_weight = input("Enter new weight: ")
                 while not validation.is_item_weight_valid(new_item_weight):
-                    print("Item weight is not valid please try again")
+                    service.print_message(config.ORDER_WEIGHT_ERROR)
                     new_item_weight = input("Enter new weight: ")
                 else:
                     updated_item["weight"] = float(new_item_weight)
-                    print("Item weight has been updated successful!")
+                    service.print_message(config.ORDER_WEIGHT_UPDATE_MESSAGE)
                     continue
 
             else:
-                print("Entered menu number is not valid please enter one of two options")
+                service.print_message(config.ORDER_UPDATE_MENU_ERROR)
         else:
             return updated_item
 
@@ -182,7 +182,7 @@ def show_report() -> None:
 
 
 @progress_delay(prefix_msg="Quitting program ")
-def close_app() -> None:  # TODO decide if this function will close the app in case of error
+def close_app() -> None:
     """ Close application
 
     The close_app function is used to close an application.
