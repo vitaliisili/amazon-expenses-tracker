@@ -5,7 +5,7 @@ import config.app_config as config
 
 
 def main():
-    parser = ArgumentParser(description=config.APP_DESCRIPTION, formatter_class=RawTextHelpFormatter)
+    parser = ArgumentParser(description=config.APP_LOGO, formatter_class=RawTextHelpFormatter)
     parser.add_argument("username", help="User Username")
     parser.add_argument("password", help="User Password")
 
