@@ -32,7 +32,7 @@ REPEAT_REGISTRATION_ERROR_MESSAGE = f"{COLOR_RED}No such user with entered usern
 # Phone number messages
 PHONE_NUMBER_MESSAGE = f"{COLOR_WHITE}Please enter phone number to continue: {COlOR_RESET}"
 PHONE_SUCCESS_MESSAGE = f"{COLOR_GREEN}\nPhone number saved successful !{COlOR_RESET}"
-PHONE_ERROR_MESSAGE = f"{COLOR_RED}Phone number is not valid, please enter a valid number{COlOR_RESET}"
+PHONE_ERROR_MESSAGE = f"{COLOR_RED}Phone number is not valid, please enter a valid number\n{COlOR_RESET}"
 
 # Login messages
 LOGIN_ERROR_MESSAGE = f"{COLOR_RED}\nUsername or password is wrong please try again{COlOR_RESET}"
