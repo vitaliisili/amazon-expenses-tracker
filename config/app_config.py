@@ -73,17 +73,6 @@ AMAZON_WELCOME_MESSAGE = f"""{COLOR_WHITE}
 {COlOR_RESET}"""
 
 APP_DESCRIPTION = f"""{COLOR_YELLOW}
-                            AMAZON EXPENSE TRACKER
- --------------------------------Description------------------------------------
- |                                                                              |
- |  Amazon expense tracker is command line application that help to generate    |
- |  detailed orders report, amazon-expense-tracker calculate delivery charges,  | 
- |  total item cost, most/least expensive item, average cost of item per order. |
- |                                                                              |
- --------------------------------------------------------------------------------
-{COlOR_RESET}"""
-
-APP_LOGO = f"""{COLOR_YELLOW}                                                                                      
            ██     ▀████▄     ▄███▀     ██     ███▀▀▀███ ▄▄█▀▀██▄ ▀███▄   ▀███▀
           ▄██▄      ████    ████      ▄██▄    █▀   ███▄██▀    ▀██▄ ███▄    █  
          ▄█▀██▄     █ ██   ▄█ ██     ▄█▀██▄   ▀   ███ ██▀      ▀██ █ ███   █  
@@ -91,6 +80,16 @@ APP_LOGO = f"""{COLOR_YELLOW}
         ████████    █  ██▄█▀  ██    ████████    ███   ▄█▄      ▄██ █   ▀██▄█  
        █▀      ██   █  ▀██▀   ██   █▀      ██  ███   ▄███▄    ▄██▀ █     ███  
      ▄███▄   ▄████▄███▄ ▀▀  ▄████▄███▄   ▄████▄████████ ▀▀████▀▀ ▄███▄    ██
-            
-            {APP_DESCRIPTION}
+     
+     
+     
+                     █▓▒▒░░░AMAZON EXPENSE TRACKER░░░▒▒▓█
+
+ --------------------------------Description------------------------------------
+ |                                                                              |
+ |  Amazon expense tracker is command line application that help to generate    |
+ |  detailed orders report, amazon-expense-tracker calculate delivery charges,  | 
+ |  total item cost, most/least expensive item, average cost of item per order. |
+ |                                                                              |
+ --------------------------------------------------------------------------------
 {COlOR_RESET}"""
