@@ -70,7 +70,8 @@ def generate_report(user_data: dict) -> str:
         :return: (float, int): the total delivery charges for all the orders in the list.
         """
 
-        total: float = sum([get_delivery_cost(order) * order["quantity"] for order in orders])
+        total: float = sum([get_delivery_cost(order) *
+                           order["quantity"] for order in orders])
 
         if total % 1 == 0:
             return int(total)
@@ -87,7 +88,8 @@ def generate_report(user_data: dict) -> str:
         :return: (float, int): The total cost of all the items only in the list of orders.
         """
 
-        total_cost: float = sum([order['total_cost'] * order["quantity"] for order in orders])
+        total_cost: float = sum(
+            [order['total_cost'] * order["quantity"] for order in orders])
         items_only = total_cost - total_delivery_charges(orders)
 
         if items_only % 1 == 0:
@@ -104,7 +106,8 @@ def generate_report(user_data: dict) -> str:
         :return: (float, int): the average cost of all orders
         """
 
-        total_cost: float = sum([order['total_cost'] * order["quantity"] for order in orders])
+        total_cost: float = sum(
+            [order['total_cost'] * order["quantity"] for order in orders])
         total_items: int = sum([order['quantity'] for order in orders])
         items_average: float = total_cost / total_items
 
@@ -137,25 +140,26 @@ def generate_report(user_data: dict) -> str:
         :return: (lit) A list of items sorted by their date in ascending order
         """
 
-        orders.sort(key=lambda item: datetime.strptime(item["purchase_date"], config.DATE_FORMAT))
+        orders.sort(key=lambda item: datetime.strptime(
+            item["purchase_date"], config.DATE_FORMAT))
 
         return orders
 
     def hide_password() -> str:
         """  Hide password
 
-        This function replace password with asterix
+        This function replace password with asterisk
 
-        :return: (str) Return a string with replaced password with asterix
+        :return: (str) Return a string with replaced password with asterisk
         """
 
         return "***"
 
     def hide_phone(phone_number: str) -> str:
-        """  Replace phone number with asterix
+        """  Replace phone number with asterisk
 
         This function takes in a phone number as a string and returns a
-        modified version of the string with the three asterix instead of digits in middle of a string.
+        modified version of the string with the three asterisk instead of digits in middle of a string.
         Example: +49***32
 
         :param phone_number: (str) A string representing a phone number.
@@ -198,7 +202,8 @@ def generate_report(user_data: dict) -> str:
     sorted_list_by_date: list = sorted_items_by_date(user_data["orders"])
     most_expensive_item_name: str = sorted_list_by_cost[-1]["item_name"]
     least_expensive_item_name: str = sorted_list_by_cost[0]["item_name"]
-    highest_item_price: Union[float, int] = get_item_cost(sorted_list_by_cost[-1])
+    highest_item_price: Union[float, int] = get_item_cost(
+        sorted_list_by_cost[-1])
     lower_item_price: Union[float, int] = get_item_cost(sorted_list_by_cost[0])
     currency: str = config.CURRENCY
     average: Union[float, int] = calculate_average(user_data["orders"])

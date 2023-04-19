@@ -2,9 +2,9 @@ import time
 
 
 def progress_delay(prefix_msg: str = "Loading", suffix_msg="Complete", sec: int = 2):
-    """ Show progres bar
+    """ Show progress bar
 
-    Usage: @progres_bar decorator decorate function that you want to show progres bar
+    @progress_bar decorator decorate function that you want to show progress bar
     change <prefix_msg> to show custom message and <sec> for delay
 
     :param suffix_msg: (str) get custom suffix message default 'Complete'
@@ -28,7 +28,8 @@ def progress_delay(prefix_msg: str = "Loading", suffix_msg="Complete", sec: int 
         :param fill: The character used to fill the progress bar.
         :return: (None) Print progress bar with each iteration
         """
-        percent = ("{0:." + "1" + "f}").format(100 * (iteration / float(total)))
+        percent = ("{0:." + "1" + "f}").format(100 *
+                                               (iteration / float(total)))
         filled_length = int(30 * iteration // total)
         bar = fill * filled_length + '-' * (30 - filled_length)
         print(f'\r{prefix} |{bar}| {percent}% {suffix}', end="")
@@ -37,7 +38,7 @@ def progress_delay(prefix_msg: str = "Loading", suffix_msg="Complete", sec: int 
         def delay(*args, **kwargs):
             """ delay call for main function
 
-            Delay main function call to specific seconds and show progres bar in command prompt
+            Delay main function call to specific seconds and show progress bar in command prompt
 
             :param args: (any) positional arguments
             :param kwargs: (any) named arguments

@@ -51,7 +51,7 @@ def show_menu() -> None:
 def save_order() -> None:
     """ Get order from user input.
 
-    This functe collect data from user input and create object <item>,
+    This function collect data from user input and create object <item>,
     Pass collected data to <save_order> function.
 
     :return: (None) This function does not return any value.
@@ -191,4 +191,5 @@ def close_app() -> None:
     :return: (None) This function does not return any value.
     """
 
-    service.print_message(config.CLOSE_APP_MESSAGE % user_db["username"], exit_app=True)
+    service.print_message(config.CLOSE_APP_MESSAGE %
+                          user_db["username"], exit_app=True)
