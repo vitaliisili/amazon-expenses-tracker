@@ -24,7 +24,11 @@ CURRENCY = "EURO"
 DATE_FORMAT = "%m/%d/%Y"
 
 # Registration messages
-REGISTRATION_PASSWORD_ERROR_MESSAGE = f"{COLOR_RED}Invalid password please try again{COlOR_RESET}"
+REGISTRATION_PASSWORD_ERROR_MESSAGE = f"""{COLOR_RED}Invalid password please try again:
+Should have at least one number.
+Should have at least one uppercase and one lowercase character.
+Should have at least one special symbol.
+Should be between 6 to 20 characters long.{COlOR_RESET}"""
 REGISTRATION_USERNAME_ERROR_MESSAGE = f"{COLOR_RED}Invalid username please try again{COlOR_RESET}"
 REGISTRATION_SUCCESSFUL_MESSAGE = f"{COLOR_GREEN}\nRegistration successful!{COlOR_RESET}"
 REPEAT_REGISTRATION_ERROR_MESSAGE = f"{COLOR_RED}No such user with entered username and password please try to register{COlOR_RESET}"
@@ -64,7 +68,7 @@ ORDER_UPDATE_MENU_ERROR = f"{COLOR_RED}Entered menu number is not valid please e
 
 # Formatted messages
 GREETING_MESSAGE = f"{COLOR_GREEN}Hello, {COLOR_YELLOW}%s!{COLOR_GREEN} Welcome to the Amazon Expense Tracker!\n{COlOR_RESET}"
-CLOSE_APP_MESSAGE = f"{COLOR_GREEN}\nThank you for your visit, {COLOR_YELLOW}%s{COLOR_GREEN}. Goodbye!{COlOR_RESET}"
+CLOSE_APP_MESSAGE = f"{COLOR_GREEN}\nThank you for your visit, {COLOR_YELLOW}%s{COLOR_GREEN}. Goodbye!\n{COlOR_RESET}"
 
 AMAZON_WELCOME_MESSAGE = f"""{COLOR_WHITE}
     ----------------------
