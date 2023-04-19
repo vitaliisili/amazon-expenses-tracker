@@ -149,7 +149,8 @@ def is_item_quantity_valid(quantity: str) -> bool:
     :param quantity: (str) A string representing the item quantity
     :return: (bool) Returns True if the input is a valid item quantity, otherwise returns False.
     """
-    return quantity.isnumeric()
+
+    return quantity.isnumeric() and int(quantity) >= 1
 
 
 def is_cost_weight_rapport_valid(weight: float, cost: float, quantity: int) -> bool:
